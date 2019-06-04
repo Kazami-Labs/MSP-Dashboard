@@ -1,0 +1,102 @@
+variables:
+  LOCAL_DIR: dist
+  FTP_SCRIPT_URL: http://path.for/ftp.sh
+  STAGE_HOST: ftp.host
+  STAGE_USER: ftp.username
+  STAGE_PASSWD: ftp.passoword
+  STAGE_REMOTE_DIR: remote/dir
+  STAGE_API_HOST: http://api-sit/
+  STAGE_BASE_URL: stage/base/url
+  PROD_HOST: ftp.host
+  PROD_USER: ftp.username
+  PROD_PASSWD: ftp.passoword
+  PROD_REMOTE_DIR: /public
+  PROD_API_HOST: http://api-prod/
+  PROD_BASE_URL: prod/base/url
+stages:
+  - install_deps
+  - test
+  - replace_env
+  - build_stage
+  - deploy_stage
+  - build_production
+  - deploy_production
+cache:
+  key: ${CI_BUILD_REF_NAME}
+  paths:
+    - node_modules/
+    - dist/
+# 安装依赖
+install_deps:
+  stage: install_deps
+  tags:
+    - build
+  only:
+    - develop
+    - master
+  script:
+    - npm install
+# 替换环境变量
+replace_env:
+  stage: replace_env
+  tags:
+    - build
+  only:
+    - develop
+    - master
+  script:
+    - sed -i "s%/stage-api%${STAGE_API_HOST}%g" .env.staging
+    - sed -i "s%/stage-api%${PROD_API_HOST}%g" .env.production
+# 运行测试用例
+test:
+  stage: test
+  tags:
+    - test
+  only:
+    - develop
+    - master
+  script:
+    - npm run test:ci
+  allow_failure: true
+# 编译预览版
+build_stage:
+  stage: build_stage
+  tags:
+    - stage
+  only:
+    - develop
+  script:
+    - export BASE_URL=${STAGE_BASE_URL}
+    - npm run build:stage
+# 部署测试服务器
+deploy_stage:
+  stage: deploy_stage
+  tags:
+    - stage
+  only:
+    - develop
+  script:
+    - wget ${FTP_SCRIPT_URL} -O ftp.sh
+    - bash ftp.sh ${STAGE_HOST} ${STAGE_USER} ${STAGE_PASSWD} ${LOCAL_DIR} ${STAGE_REMOTE_DIR}
+    - echo 'Production commit sha:' ${CI_COMMIT_SHA}
+# 编译正式版
+build_production:
+  stage: build_production
+  tags:
+    - production
+  only:
+    - master
+  script:
+    - export BASE_URL=${PROD_BASE_URL}
+    - npm run build:prod
+# 部署生产服务器
+deploy_production:
+  stage: deploy_production
+  tags:
+    - production
+  only:
+    - master
+  script:
+    - wget ${FTP_SCRIPT_URL} -O ftp.sh
+    - bash ftp.sh ${PROD_HOST} ${PROD_USER} ${PROD_PASSWD} ${LOCAL_DIR} ${PROD_REMOTE_DIR}
+    - echo 'Production commit sha:' ${CI_COMMIT_SHA}
