@@ -1,11 +1,14 @@
 import Cookies from 'js-cookie'
+import { getLanguage } from '@/i18n'
 
 const state = {
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
+  device: 'desktop',
+  language: getLanguage(),
+  size: Cookies.get('size') || 'medium'
 }
 
 const mutations = {
@@ -25,6 +28,10 @@ const mutations = {
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
+  },
+  SET_LANGUAGE: (state, language) => {
+    state.language = language
+    Cookies.set('language', language)
   }
 }
 
