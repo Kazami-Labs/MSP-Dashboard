@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 v-t="'site.title'" class="title" />
       </div>
 
       <el-form-item prop="username">
@@ -13,7 +13,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          :placeholder="$t('loginView.username')"
           name="username"
           type="text"
           tabindex="1"
@@ -30,20 +30,20 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          :placeholder="$t('loginView.password')"
           name="password"
           tabindex="2"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          <svg-icon :icon-class="passwordIcon" />
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ loginBtnText }}</el-button>
 
-      <div class="tips">
+      <div v-if="false" class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
       </div>
@@ -53,37 +53,51 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { validEmail } from '@/utils/validate'
+import { isDev } from '@/utils'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+      if (!validEmail(value)) {
+        callback(new Error(this.$t('loginView.invaildEmailTips')))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (value.length < 1) {
+        callback(new Error(this.$t('loginView.invaildPasswordTips')))
       } else {
         callback()
       }
     }
+    // 开发时预置登录账户
+    let defaultLoginForm = {}
+    if (isDev()) {
+      defaultLoginForm = {
+        username: 'tsukasa.kzk@gmail.com',
+        password: 'secret'
+      }
+    } else {
+      defaultLoginForm = {}
+    }
     return {
-      loginForm: {
-        username: 'admin',
-        password: '111111'
-      },
+      loginForm: Object.assign({}, defaultLoginForm),
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      loginBtnText: this.$t('loginView.loginBtn')
+    }
+  },
+  computed: {
+    passwordIcon() {
+      return this.passwordType === 'password' ? 'eye' : 'eye-open'
     }
   },
   watch: {
@@ -109,12 +123,16 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
+          this.loginBtnText = this.$t('loginView.connecting')
+          this.$store.dispatch('user/login', this.loginForm)
+            .then(() => {
+              this.loginBtnText = this.$t('loginView.loading')
+              this.$router.push({ path: this.redirect || '/' })
+            })
+            .catch(() => {
+              this.loginBtnText = this.$t('loginView.loginBtn')
+              this.loading = false
+            })
         } else {
           console.log('error submit!!')
           return false

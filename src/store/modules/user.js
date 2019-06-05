@@ -1,6 +1,8 @@
+import { Message } from 'element-ui'
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import i18n from '../../i18n'
 
 const state = {
   token: getToken(),
@@ -11,6 +13,11 @@ const state = {
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
+    if (token) {
+      setToken(token)
+    } else {
+      removeToken()
+    }
   },
   SET_NAME: (state, name) => {
     state.name = name
@@ -24,58 +31,46 @@ const actions = {
   // user login
   login({ commit }, userInfo) {
     const { username, password } = userInfo
-    return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+    const params = {
+      username: username.trim(),
+      password: password
+    }
+    return login(params)
+      .then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
+        commit('SET_TOKEN', data.access_token)
       })
-    })
   },
 
   // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+  getInfo({ commit }) {
+    return getInfo()
+      .then(response => {
         const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        const { name, avatar } = data
-
+        const { name, avatar_addr } = data
         commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
+        commit('SET_AVATAR', avatar_addr)
       })
-    })
   },
 
   // user logout
   logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
+    return logout(state.token)
+      .then(() => {
+        Message({
+          message: i18n.t('auth.logoutSuccessed'),
+          type: 'success',
+          duration: 5 * 1000
+        })
         commit('SET_TOKEN', '')
-        removeToken()
         resetRouter()
-        resolve()
-      }).catch(error => {
-        reject(error)
       })
-    })
   },
 
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
-      removeToken()
       resolve()
     })
   }

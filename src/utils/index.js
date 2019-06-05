@@ -108,3 +108,15 @@ export function param2Obj(url) {
       '"}'
   )
 }
+
+export function isDev() {
+  return process.env.NODE_ENV === 'development'
+}
+
+export function isStage() {
+  return process.env.NODE_ENV === 'staging'
+}
+
+export function isProd() {
+  return process.env.NODE_ENV === 'production'
+}
