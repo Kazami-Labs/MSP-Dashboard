@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: 'Mabors! 「Beta Rebuild」',
 
   /**
    * @type {boolean} true | false
