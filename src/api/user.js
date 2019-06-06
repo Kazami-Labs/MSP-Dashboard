@@ -15,6 +15,13 @@ export function getInfo() {
   })
 }
 
+export function toPortal() {
+  return request({
+    url: '/auth/to-portal',
+    method: 'get'
+  })
+}
+
 export function logout() {
   return request({
     url: '/auth/logout',
