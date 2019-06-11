@@ -20,5 +20,11 @@ export default {
     loginBtn: 'LINK START!',
     connecting: 'CONNECTING...',
     loading: 'LOADING...'
+  },
+  tagsView: {
+    refresh: 'Refresh',
+    close: 'Close',
+    closeOthers: 'Close Others',
+    closeAll: 'Close All'
   }
 }
