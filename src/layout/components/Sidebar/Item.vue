@@ -1,4 +1,6 @@
 <script>
+import i18n from '@/i18n'
+
 export default {
   name: 'MenuItem',
   functional: true,
@@ -21,7 +23,8 @@ export default {
     }
 
     if (title) {
-      vnodes.push(<span slot='title'>{(title)}</span>)
+      const titleI18n = i18n.t(`route.${title}`)
+      vnodes.push(<span slot='title'>{(titleI18n)}</span>)
     }
     return vnodes
   }
