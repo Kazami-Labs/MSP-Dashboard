@@ -27,6 +27,12 @@ export default {
     closeOthers: 'Close Others',
     closeAll: 'Close All'
   },
+  navbar: {
+    logout: 'Logout',
+    home: 'Dashboard',
+    queueProcess: 'Queues are processing...',
+    queueCompile: 'All queues compiled!'
+  },
   dashboard: {
     queues: 'Queues',
     postTitle: 'Post',

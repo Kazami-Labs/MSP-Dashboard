@@ -9,13 +9,26 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+      <div class="queues-loading">
+        <el-tooltip :content="queuesBtnTips" effect="dark" placement="top-end">
+          <el-button
+            :type="queuesBtnType"
+            :loading="queuesBtnLoading"
+            class="el-button-micro"
+            icon="el-icon-check"
+            circle
+            @click="$router.push({ name: 'Dashboard' })"
+          />
+        </el-tooltip>
+      </div>
+
       <el-dropdown
         class="avatar-container"
         trigger="click"
       >
         <div class="avatar-wrapper">
           <img
-            :src="avatar+'?imageView2/1/w/80/h/80'"
+            :src="avatar"
             class="user-avatar"
           >
           <i class="el-icon-caret-bottom" />
@@ -25,9 +38,7 @@
           class="user-dropdown"
         >
           <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
+            <el-dropdown-item v-t="'navbar.home'" />
           </router-link>
           <a
             target="_blank"
@@ -45,9 +56,10 @@
           </a>
           <el-dropdown-item divided>
             <span
+              v-t="'navbar.logout'"
               style="display:block;"
               @click="logout"
-            >Log Out</span>
+            />
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -58,6 +70,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { toPortal } from '@/api/user'
+import { getQueues } from '@/api/publish'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
@@ -66,8 +79,26 @@ export default {
     Breadcrumb,
     Hamburger
   },
+  data() {
+    return {
+      queuesBtnType: 'primary',
+      queuesBtnLoading: true,
+      queuesBtnTips: '',
+      queuesInterval: null
+    }
+  },
   computed: {
     ...mapGetters(['sidebar', 'avatar'])
+  },
+  created() {
+    this.queuesBtnTips = this.$t('navbar.queueProcess')
+  },
+  mounted() {
+    const INTERVAL_TO_GET_QUEUES = 3000
+    this.queuesInterval = window.setInterval(this.checkQueues, INTERVAL_TO_GET_QUEUES)
+  },
+  destroyed() {
+    window.clearInterval(this.queuesInterval)
   },
   methods: {
     toggleSideBar() {
@@ -83,6 +114,21 @@ export default {
       toPortal()
         .then(() => {
           window.open('/telescope')
+        })
+    },
+    checkQueues() {
+      return getQueues()
+        .then(res => {
+          this.$store.commit('STORE_QUEUES', res.data.list)
+          if (res.data.has_done) {
+            this.queuesBtnType = 'success'
+            this.queuesBtnTips = this.$t('navbar.queueCompile')
+            this.queuesBtnLoading = false
+          } else {
+            this.queuesBtnType = 'primary'
+            this.queuesBtnTips = this.$t('navbar.queueProcess')
+            this.queuesBtnLoading = true
+          }
         })
     },
     async logout() {
@@ -115,13 +161,24 @@ export default {
   }
 
   .breadcrumb-container {
-    float: left;
+    display: inline-block;
+    width: calc(100% - 190px);
   }
 
   .right-menu {
-    float: right;
+    display: inline-block;
+    width: 125px;
     height: 100%;
     line-height: 50px;
+
+    >* {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .queues-loading {
+      vertical-align: top;
+    }
 
     &:focus {
       outline: none;
