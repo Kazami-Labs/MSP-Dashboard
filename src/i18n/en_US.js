@@ -26,5 +26,11 @@ export default {
     close: 'Close',
     closeOthers: 'Close Others',
     closeAll: 'Close All'
+  },
+  dashboard: {
+    queues: 'Queues',
+    postTitle: 'Post',
+    siteName: 'Site',
+    status: 'State'
   }
 }

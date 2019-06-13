@@ -8,7 +8,10 @@ const state = {
   },
   device: 'desktop',
   language: getLanguage(),
-  size: Cookies.get('size') || 'medium'
+  size: Cookies.get('size') || 'medium',
+  queues: {
+    list: []
+  }
 }
 
 const mutations = {
@@ -32,6 +35,9 @@ const mutations = {
   SET_LANGUAGE: (state, language) => {
     state.language = language
     Cookies.set('language', language)
+  },
+  STORE_QUEUES: (state, list) => {
+    state.queues.list = JSON.parse(JSON.stringify(list))
   }
 }
 
