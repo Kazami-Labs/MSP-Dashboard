@@ -95,7 +95,12 @@ export default {
   },
   mounted() {
     const INTERVAL_TO_GET_QUEUES = 3000
-    this.queuesInterval = window.setInterval(this.checkQueues, INTERVAL_TO_GET_QUEUES)
+    this.queuesInterval = window.setInterval(() => {
+      this.checkQueues()
+        .catch(e => {
+          window.clearInterval(this.queuesInterval)
+        })
+    }, INTERVAL_TO_GET_QUEUES)
   },
   destroyed() {
     window.clearInterval(this.queuesInterval)
