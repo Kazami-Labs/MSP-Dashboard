@@ -199,7 +199,7 @@ import torrentUpload from '@/components/Upload/torrentUpload'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validateURL } from '@/utils/validate'
-import { fetchPublish, createPublish, updatePublish, uploadPostPicUrl, uploadTorrentApi } from '@/api/publish'
+import { fetchPublish, createPublish, updatePublish, uploadTorrentApi } from '@/api/publish'
 import { userSearch } from '@/api/remoteSearch'
 import Warning from './Warning'
 import { CommentDropdown } from './Dropdown'
@@ -294,9 +294,6 @@ export default {
     },
     lang() {
       return this.$store.getters.language
-    },
-    uploadImageUrl() {
-      return uploadPostPicUrl
     },
     uploadTorrentApi() {
       return uploadTorrentApi

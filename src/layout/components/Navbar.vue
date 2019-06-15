@@ -22,44 +22,23 @@
         </el-tooltip>
       </div>
 
-      <el-dropdown
-        class="avatar-container"
-        trigger="click"
-      >
+      <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img
-            :src="avatar"
-            class="user-avatar"
-          >
+          <img :src="avatar" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
-        <el-dropdown-menu
-          slot="dropdown"
-          class="user-dropdown"
-        >
+        <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
             <el-dropdown-item v-t="'navbar.home'" />
           </router-link>
-          <a
-            target="_blank"
-            href="javascript:void()"
-            @click="handleToPortal"
-          >
+          <a target="_blank" href="javascript:void()" @click="handleToPortal">
             <el-dropdown-item>Portal</el-dropdown-item>
           </a>
-          <a
-            target="_blank"
-            href="javascript:void()"
-            @click="handleToTelescope"
-          >
+          <a target="_blank" href="javascript:void()" @click="handleToTelescope">
             <el-dropdown-item>Telescope</el-dropdown-item>
           </a>
           <el-dropdown-item divided>
-            <span
-              v-t="'navbar.logout'"
-              style="display:block;"
-              @click="logout"
-            />
+            <span v-t="'navbar.logout'" style="display:block;" @click="logout" />
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -96,10 +75,9 @@ export default {
   mounted() {
     const INTERVAL_TO_GET_QUEUES = 3000
     this.queuesInterval = window.setInterval(() => {
-      this.checkQueues()
-        .catch(e => {
-          window.clearInterval(this.queuesInterval)
-        })
+      this.checkQueues().catch(e => {
+        window.clearInterval(this.queuesInterval)
+      })
     }, INTERVAL_TO_GET_QUEUES)
   },
   destroyed() {
@@ -110,31 +88,28 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     handleToPortal() {
-      toPortal()
-        .then(() => {
-          window.open('/')
-        })
+      toPortal().then(() => {
+        window.open('/')
+      })
     },
     handleToTelescope() {
-      toPortal()
-        .then(() => {
-          window.open('/telescope')
-        })
+      toPortal().then(() => {
+        window.open('/telescope')
+      })
     },
     checkQueues() {
-      return getQueues()
-        .then(res => {
-          this.$store.commit('STORE_QUEUES', res.data.list)
-          if (res.data.has_done) {
-            this.queuesBtnType = 'success'
-            this.queuesBtnTips = this.$t('navbar.queueCompile')
-            this.queuesBtnLoading = false
-          } else {
-            this.queuesBtnType = 'primary'
-            this.queuesBtnTips = this.$t('navbar.queueProcess')
-            this.queuesBtnLoading = true
-          }
-        })
+      return getQueues().then(res => {
+        this.$store.dispatch('app/storeQueues', res.data.list)
+        if (res.data.has_done) {
+          this.queuesBtnType = 'success'
+          this.queuesBtnTips = this.$t('navbar.queueCompile')
+          this.queuesBtnLoading = false
+        } else {
+          this.queuesBtnType = 'primary'
+          this.queuesBtnTips = this.$t('navbar.queueProcess')
+          this.queuesBtnLoading = true
+        }
+      })
     },
     async logout() {
       await this.$store.dispatch('user/logout')
@@ -176,7 +151,7 @@ export default {
     height: 100%;
     line-height: 50px;
 
-    >* {
+    > * {
       display: inline-block;
       margin-right: 10px;
     }

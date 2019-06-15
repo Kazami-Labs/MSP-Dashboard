@@ -50,6 +50,9 @@ const actions = {
   },
   toggleDevice({ commit }, device) {
     commit('TOGGLE_DEVICE', device)
+  },
+  storeQueues({ commit }, list) {
+    commit('STORE_QUEUES', list)
   }
 }
 

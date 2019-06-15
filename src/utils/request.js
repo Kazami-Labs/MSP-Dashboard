@@ -4,6 +4,8 @@ import store from '@/store'
 import i18n from '@/i18n'
 import { getToken, removeToken } from '@/utils/auth'
 
+export const baseURL = process.env.VUE_APP_BASE_API
+
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url

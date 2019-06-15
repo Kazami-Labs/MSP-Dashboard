@@ -1,4 +1,7 @@
 import request from '@/utils/request'
+import { baseURL } from '@/utils/request'
+
+export const uploadTorrentApi = `${baseURL}/post/torrent/admin`
 
 export function fetchList(query) {
   return request({

@@ -21,6 +21,13 @@ Vue.use(ElementUI, {
 
 Vue.config.productionTip = false
 
+// Markdown Editor
+// https://juejin.im/post/5adab398f265da0b9671ca25#heading-11
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
+Vue.use(mavonEditor)
+
 new Vue({
   el: '#app',
   router,
