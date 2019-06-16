@@ -72,7 +72,7 @@ export default {
     logoutSuccessed: 'Successfully logged out'
   },
   site: {
-    title: 'Mabors! Publish Platform 「Beta Rebuild」'
+    title: 'Mabors! Publish Platform 「Beta」'
   },
   loginView: {
     username: 'Username',

@@ -22,6 +22,8 @@
         </el-tooltip>
       </div>
 
+      <lang-select class="international right-menu-item" />
+
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar" class="user-avatar">
@@ -52,11 +54,13 @@ import { toPortal } from '@/api/user'
 import { getQueues } from '@/api/publish'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import LangSelect from '@/components/LangSelect'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    LangSelect
   },
   data() {
     return {
@@ -142,12 +146,12 @@ export default {
 
   .breadcrumb-container {
     display: inline-block;
-    width: calc(100% - 190px);
+    width: calc(100% - 240px);
   }
 
   .right-menu {
     display: inline-block;
-    width: 125px;
+    width: 175px;
     height: 100%;
     line-height: 50px;
 

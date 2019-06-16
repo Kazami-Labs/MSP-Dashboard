@@ -51,6 +51,9 @@ const actions = {
   toggleDevice({ commit }, device) {
     commit('TOGGLE_DEVICE', device)
   },
+  setLanguage({ commit }, language) {
+    commit('SET_LANGUAGE', language)
+  },
   storeQueues({ commit }, list) {
     commit('STORE_QUEUES', list)
   }

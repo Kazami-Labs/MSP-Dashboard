@@ -20,6 +20,11 @@ const messages = {
   }
 }
 
+export const avaliable = [
+  // { lang: 'zh-CN', translate: '简体中文' },
+  { lang: 'en-US', translate: 'English' }
+]
+
 export function getLanguage() {
   // const chooseLanguage = Cookies.get('language')
   // if (chooseLanguage) return chooseLanguage
