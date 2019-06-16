@@ -13,6 +13,7 @@ const name = defaultSettings.title || 'vue Admin Template' // page title
 const port = 8080 // dev port
 
 const publicPath = process.env.BASE_URL || '/'
+const host = process.env.HOST || 'localhost'
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -29,6 +30,7 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
+    host: host,
     port: port,
     open: false,
     overlay: {
