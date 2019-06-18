@@ -10,19 +10,19 @@ import zhCn from './zh_CN'
 Vue.use(VueI18n)
 
 const messages = {
-  'zh-CN': {
+  'zh-cn': {
     ...zhCn,
     ...elementZh
   },
-  'en-US': {
+  'en-us': {
     ...enUs,
     ...elementEn
   }
 }
 
 export const avaliable = [
-  { lang: 'zh-CN', translate: '简体中文' },
-  { lang: 'en-US', translate: 'English' }
+  { lang: 'zh-cn', translate: '简体中文' },
+  { lang: 'en-us', translate: 'English' }
 ]
 
 export function getLanguage() {
@@ -37,7 +37,7 @@ export function getLanguage() {
       return locale
     }
   }
-  // return 'en-US'
+  return 'en-us'
 }
 
 const i18n = new VueI18n({
