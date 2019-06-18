@@ -55,7 +55,7 @@ build_stage:
     - develop
   script:
     - export BASE_URL=${STAGE_BASE_URL}
-    - sed -i "s%/stage-api%${STAGE_API_HOST}%g" .env.staging
+    - sed -i "s%/api%${STAGE_API_HOST}%g" .env.staging
     - npm run build:stage
 # 部署测试服务器
 deploy_stage:
