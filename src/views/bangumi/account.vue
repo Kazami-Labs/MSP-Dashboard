@@ -2,8 +2,8 @@
   <div class="app-container">
     <div class="filter-container">
       <el-button
-        v-waves
         v-if="false"
+        v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
@@ -63,15 +63,15 @@
             <el-row :gutter="20">
               <el-col :span="8">
                 <el-input
-                  :placeholder="$t('bangumiSettings.username')"
                   v-model="scope.row.username"
+                  :placeholder="$t('bangumiSettings.username')"
                   size="small"
                 />
               </el-col>
               <el-col :span="8">
                 <el-input
-                  :placeholder="$t('bangumiSettings.noChangeWithNonValue')"
                   v-model="scope.row.password"
+                  :placeholder="$t('bangumiSettings.noChangeWithNonValue')"
                   size="small"
                 />
               </el-col>
@@ -87,8 +87,8 @@
         <template slot-scope="scope">
           <template v-if="scope.row.edit">
             <el-select v-model="scope.row.status" size="mini">
-              <el-option :label="$t('common.enable')" :value="1"/>
-              <el-option :label="$t('common.disable')" :value="0"/>
+              <el-option :label="$t('common.enable')" :value="1" />
+              <el-option :label="$t('common.disable')" :value="0" />
             </el-select>
           </template>
           <template v-else>
@@ -179,10 +179,10 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('bangumiSettings.username')" prop="nicename">
-          <el-input v-model="temp.username"/>
+          <el-input v-model="temp.username" />
         </el-form-item>
         <el-form-item :label="$t('bangumiSettings.password')" prop="password">
-          <el-input v-model="temp.password" type="password"/>
+          <el-input v-model="temp.password" type="password" />
         </el-form-item>
         <el-form-item :label="$t('bangumiSettings.status')">
           <el-select
@@ -213,7 +213,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as api from '@/api/settings'
-import MDinput from '@/components/MDinput'
 import waves from '@/directive/waves' // 水波纹指令
 
 const temp = {
@@ -229,7 +228,6 @@ export default {
   directives: {
     waves
   },
-  components: { MDinput },
   filters: {
     statusFilter: function(status) {
       const statusMap = {
