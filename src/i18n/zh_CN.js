@@ -60,11 +60,6 @@ export default {
     refresh: '刷新',
     createdAt: '创建时间'
   },
-  errorLog: {
-    tips: '请点击右上角bug小图标',
-    description: '现在的管理后台基本都是spa的形式了，它增强了用户体验，但同时也会增加页面出问题的可能性，可能一个小小的疏忽就导致整个页面的死锁。好在 Vue 官网提供了一个方法来捕获处理异常，你可以在其中进行错误处理或者异常上报。',
-    documentation: '文档介绍'
-  },
   auth: {
     hasBeenLogout: '登录超时，你可以关闭此对话框以留在当前页面，或者点击重登按钮重新登录',
     confirmLogout: '你已登出',
@@ -88,6 +83,15 @@ export default {
     close: '关闭',
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
+  },
+  errorLogView: {
+    title: '错误日志',
+    detail: '详细信息',
+    msg: '消息:',
+    info: '信息:',
+    url: '路由:',
+    in: '位于',
+    stack: '调用栈'
   },
   navbar: {
     logout: '登出',

@@ -60,11 +60,6 @@ export default {
     refresh: 'Refresh',
     createdAt: 'Created at'
   },
-  errorLog: {
-    tips: 'Please click the bug icon in the upper right corner',
-    description: 'Now the management system are basically the form of the spa, it enhances the user experience, but it also increases the possibility of page problems, a small negligence may lead to the entire page deadlock. Fortunately Vue provides a way to catch handling exceptions, where you can handle errors or report exceptions.',
-    documentation: 'Document introduction'
-  },
   auth: {
     hasBeenLogout: 'You have been logged out, you can cancel to stay on this page, or log in again',
     confirmLogout: 'Confirm logout',
@@ -88,6 +83,15 @@ export default {
     close: 'Close',
     closeOthers: 'Close Others',
     closeAll: 'Close All'
+  },
+  errorLogView: {
+    title: 'Error Log',
+    detail: 'Detail',
+    msg: 'Message:',
+    info: 'Info:',
+    url: 'Url:',
+    in: 'error in',
+    stack: 'Stack'
   },
   navbar: {
     logout: 'Logout',

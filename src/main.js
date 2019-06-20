@@ -13,7 +13,8 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-import i18n from './i18n' // Internation
+import i18n from '@/i18n' // Internation
+import '@/utils/error-log'
 
 Vue.use(ElementUI, {
   size: store.getters.size // set element-ui default size

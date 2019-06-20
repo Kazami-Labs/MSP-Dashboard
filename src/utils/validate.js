@@ -23,3 +23,25 @@ export function validEmail(str) {
   const pattern = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/
   return pattern.test(str) === true
 }
+
+/**
+ * @param {string} str
+ * @returns {Boolean}
+ */
+export function isString(str) {
+  if (typeof str === 'string' || str instanceof String) {
+    return true
+  }
+  return false
+}
+
+/**
+ * @param {Array} arg
+ * @returns {Boolean}
+ */
+export function isArray(arg) {
+  if (typeof Array.isArray === 'undefined') {
+    return Object.prototype.toString.call(arg) === '[object Array]'
+  }
+  return Array.isArray(arg)
+}

@@ -22,6 +22,8 @@
         </el-tooltip>
       </div>
 
+      <error-log class="errLog-container right-menu-item" />
+
       <lang-select class="international right-menu-item" />
 
       <el-dropdown class="avatar-container" trigger="click">
@@ -55,12 +57,14 @@ import { getQueues } from '@/api/publish'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import LangSelect from '@/components/LangSelect'
+import ErrorLog from '@/components/ErrorLog'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
-    LangSelect
+    LangSelect,
+    ErrorLog
   },
   data() {
     return {
@@ -146,14 +150,15 @@ export default {
 
   .breadcrumb-container {
     display: inline-block;
-    width: calc(100% - 240px);
+    width: calc(100% - 315px);
   }
 
   .right-menu {
     display: inline-block;
-    width: 175px;
+    width: 250px;
     height: 100%;
     line-height: 50px;
+    text-align: right;
 
     > * {
       display: inline-block;
