@@ -22,6 +22,8 @@
         </el-tooltip>
       </div>
 
+      <screenfull id="screenfull" class="right-menu-item hover-effect" />
+
       <error-log class="errLog-container right-menu-item" />
 
       <lang-select class="international right-menu-item" />
@@ -56,6 +58,7 @@ import { toPortal } from '@/api/user'
 import { getQueues } from '@/api/publish'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import Screenfull from '@/components/Screenfull'
 import LangSelect from '@/components/LangSelect'
 import ErrorLog from '@/components/ErrorLog'
 
@@ -63,6 +66,7 @@ export default {
   components: {
     Breadcrumb,
     Hamburger,
+    Screenfull,
     LangSelect,
     ErrorLog
   },
@@ -150,12 +154,12 @@ export default {
 
   .breadcrumb-container {
     display: inline-block;
-    width: calc(100% - 315px);
+    width: calc(100% - 365px);
   }
 
   .right-menu {
     display: inline-block;
-    width: 250px;
+    width: 300px;
     height: 100%;
     line-height: 50px;
     text-align: right;
