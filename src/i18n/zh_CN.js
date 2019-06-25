@@ -67,7 +67,7 @@ export default {
     logoutSuccessed: '你已登出'
   },
   site: {
-    title: 'Mabors! Publish Platform 「Beta」'
+    title: 'Mabors! Publish Platform'
   },
   loginView: {
     username: '电邮地址',
