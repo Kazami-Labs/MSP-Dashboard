@@ -77,3 +77,10 @@ export function getTransferLogsContents(logId) {
     method: 'get'
   })
 }
+
+export function retryQueue(postId, settingId) {
+  return request({
+    url: `/post/queue/${postId}/${settingId}/retry/admin`,
+    method: 'post'
+  })
+}

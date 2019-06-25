@@ -103,7 +103,8 @@ export default {
     queues: 'Queues',
     postTitle: 'Post',
     siteName: 'Site',
-    status: 'State'
+    status: 'State',
+    retry: 'Retry'
   },
   publish: {
     id: 'Id',

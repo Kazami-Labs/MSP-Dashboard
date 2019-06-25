@@ -16,6 +16,7 @@
             :loading="queuesBtnLoading"
             class="el-button-micro"
             icon="el-icon-check"
+            size="mini"
             circle
             @click="$router.push({ name: 'Dashboard' })"
           />

@@ -103,7 +103,8 @@ export default {
     queues: '同步队列',
     postTitle: '番剧',
     siteName: '发布站点',
-    status: '状态'
+    status: '状态',
+    retry: '重试'
   },
   publish: {
     id: '发布id',
