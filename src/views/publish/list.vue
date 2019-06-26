@@ -2,8 +2,8 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input
-        :placeholder="$t('publish.title')"
         v-model="listQuery.title"
+        :placeholder="$t('publish.title')"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
@@ -161,8 +161,8 @@
         stripe
         style="width: 100%"
       >
-        <el-table-column :label="$t('bangumi.platform')" prop="site"/>
-        <el-table-column :label="$t('bangumi.syncState')" prop="sync_state"/>
+        <el-table-column :label="$t('bangumi.platform')" prop="site" />
+        <el-table-column :label="$t('bangumi.syncState')" prop="sync_state" />
         <el-table-column :label="$t('bangumi.logFile')">
           <template slot-scope="scope">
             <el-button
@@ -173,7 +173,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column :label="$t('table.createdAt')" prop="created_at"/>
+        <el-table-column :label="$t('table.createdAt')" prop="created_at" />
       </el-table>
     </el-dialog>
 

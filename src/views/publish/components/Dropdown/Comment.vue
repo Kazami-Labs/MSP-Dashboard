@@ -2,7 +2,7 @@
   <el-dropdown :show-timeout="100" trigger="click">
     <el-button plain>
       {{ $t( `comment.${comment_status}`) }}
-      <i class="el-icon-caret-bottom el-icon--right"/>
+      <i class="el-icon-caret-bottom el-icon--right" />
     </el-button>
     <el-dropdown-menu slot="dropdown" class="no-padding">
       <el-dropdown-item>

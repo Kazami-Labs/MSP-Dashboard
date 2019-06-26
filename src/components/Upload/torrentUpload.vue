@@ -26,7 +26,7 @@
       @click="submitUpload"
     >{{ $t('torrentUpload.submitUpload') }}</el-button>
     <div slot="tip" class="el-upload__tip">
-      <slot/>
+      <slot />
     </div>
   </el-upload>
 </template>

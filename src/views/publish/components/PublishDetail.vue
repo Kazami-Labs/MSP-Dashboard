@@ -20,7 +20,6 @@
 
       <div class="post-main-container">
         <el-row>
-          <Warning v-if="false" />
           <el-col :span="24">
             <el-row class="editor-head">
               <el-col :span="12">
@@ -187,7 +186,6 @@
             </div>
           </el-col>
         </el-row>
-
       </div>
     </el-form>
   </div>
@@ -201,7 +199,6 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 import { validateURL } from '@/utils/validate'
 import { fetchPublish, createPublish, updatePublish, uploadTorrentApi } from '@/api/publish'
 import { userSearch } from '@/api/remoteSearch'
-import Warning from './Warning'
 import { CommentDropdown } from './Dropdown'
 
 const defaultForm = {
@@ -232,7 +229,6 @@ export default {
   components: {
     MDinput,
     Sticky,
-    Warning,
     CommentDropdown,
     torrentUpload
   },

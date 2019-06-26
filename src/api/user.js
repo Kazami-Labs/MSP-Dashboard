@@ -28,3 +28,19 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function updateUser(id, data) {
+  return request({
+    url: `/user/${id}/admin`,
+    method: 'post',
+    data
+  })
+}
+
+export function createUser(data) {
+  return request({
+    url: `/user/admin`,
+    method: 'post',
+    data
+  })
+}
