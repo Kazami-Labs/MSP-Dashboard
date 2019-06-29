@@ -38,10 +38,13 @@
           <router-link to="/">
             <el-dropdown-item v-t="'navbar.home'" />
           </router-link>
-          <a target="_blank" href="javascript:void()" @click="handleToPortal">
+          <a v-show="false" target="_blank" href="javascript:void(0)" @click="handleToChangeAvatar">
+            <el-dropdown-item v-t="'navbar.changeAvatar'" />
+          </a>
+          <a target="_blank" href="javascript:void(0)" @click="handleToPortal">
             <el-dropdown-item>Portal</el-dropdown-item>
           </a>
-          <a target="_blank" href="javascript:void()" @click="handleToTelescope">
+          <a target="_blank" href="javascript:void(0)" @click="handleToTelescope">
             <el-dropdown-item>Telescope</el-dropdown-item>
           </a>
           <el-dropdown-item divided>
@@ -128,6 +131,9 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    handleToChangeAvatar() {
+      console.log('hello world')
     }
   }
 }
@@ -221,5 +227,11 @@ export default {
       }
     }
   }
+}
+
+.user-dropdown {
+  top: 38px !important;
+  left: auto !important;
+  right: 10px !important;
 }
 </style>
