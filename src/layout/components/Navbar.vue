@@ -113,6 +113,7 @@ export default {
     checkQueues() {
       return getQueues().then(res => {
         this.$store.dispatch('app/storeQueues', res.data.list)
+        this.$store.dispatch('app/storeQueuesLength', res.data.length)
         if (res.data.has_done) {
           this.queuesBtnType = 'success'
           this.queuesBtnTips = this.$t('navbar.queueCompile')

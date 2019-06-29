@@ -10,7 +10,8 @@ const state = {
   language: getLanguage(),
   size: Cookies.get('size') || 'medium',
   queues: {
-    list: []
+    list: [],
+    length: 0
   }
 }
 
@@ -38,6 +39,9 @@ const mutations = {
   },
   STORE_QUEUES: (state, list) => {
     state.queues.list = JSON.parse(JSON.stringify(list))
+  },
+  STORE_QUEUES_LENGTH: (state, length) => {
+    state.queues.length = length
   }
 }
 
@@ -56,6 +60,9 @@ const actions = {
   },
   storeQueues({ commit }, list) {
     commit('STORE_QUEUES', list)
+  },
+  storeQueuesLength({ commit }, length) {
+    commit('STORE_QUEUES_LENGTH', length)
   }
 }
 

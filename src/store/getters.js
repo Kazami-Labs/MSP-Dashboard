@@ -9,7 +9,7 @@ const getters = {
   name: state => state.user.name,
   errorLogs: state => state.errorLog.logs,
   hasQueues: state => state.app.queues.list.length > 0,
-  queuesLength: state => state.app.queues.list.length,
+  queuesLength: state => state.app.queues.length,
   queues: state => state.app.queues.list
 }
 export default getters
