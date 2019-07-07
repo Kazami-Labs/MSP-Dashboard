@@ -328,7 +328,7 @@ export default {
       const title = this.$t('publish.editPublish')
       const post_name = decodeURI(this.postForm.post_title)
       const route = Object.assign({}, this.$route, { title: `${title}-${post_name}` })
-      this.$store.dispatch('updateVisitedView', route)
+      this.$store.dispatch('tagsView/updateVisitedView', route)
     },
     setUserSelect() {
       this.userListOptions.push(this.postForm.author)

@@ -7,7 +7,8 @@ export default {
     publishList: '所有发布',
     settings: '系统设定',
     userManager: '用户管理',
-    bangumiAccounts: '同步账户'
+    bangumiAccounts: '同步账户',
+    profile: '个人信息'
   },
   common: {
     cancel: '取消',
@@ -97,7 +98,8 @@ export default {
     logout: '登出',
     home: '首页',
     queueProcess: '当前还有同步任务在执行……',
-    queueCompile: '没有在执行的同步任务'
+    queueCompile: '没有在执行的同步任务',
+    changeAvatar: '更改头像'
   },
   dashboard: {
     queues: '同步队列',
@@ -149,6 +151,9 @@ export default {
     registered: '注册时间',
     status: '状态',
     edit: '编辑'
+  },
+  profile: {
+    changeAvatar: '更改头像'
   },
   comment: {
     open: '评论已打开',

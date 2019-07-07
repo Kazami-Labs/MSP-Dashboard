@@ -38,9 +38,9 @@
           <router-link to="/">
             <el-dropdown-item v-t="'navbar.home'" />
           </router-link>
-          <a v-show="false" target="_blank" href="javascript:void(0)" @click="handleToChangeAvatar">
+          <router-link to="/profile">
             <el-dropdown-item v-t="'navbar.changeAvatar'" />
-          </a>
+          </router-link>
           <a target="_blank" href="javascript:void(0)" @click="handleToPortal">
             <el-dropdown-item>Portal</el-dropdown-item>
           </a>

@@ -7,7 +7,8 @@ export default {
     publishList: 'Publication List',
     settings: 'Settings',
     userManager: 'Users',
-    bangumiAccounts: 'Banugmi Accounts'
+    bangumiAccounts: 'Banugmi Accounts',
+    profile: 'Profile'
   },
   common: {
     cancel: 'Cancel',
@@ -97,7 +98,8 @@ export default {
     logout: 'Logout',
     home: 'Dashboard',
     queueProcess: 'Queues are processing...',
-    queueCompile: 'All queues compiled!'
+    queueCompile: 'All queues compiled!',
+    changeAvatar: 'Change Avatar'
   },
   dashboard: {
     queues: 'Queues',
@@ -149,6 +151,9 @@ export default {
     registered: 'Registered At',
     status: 'Status',
     edit: 'Edit'
+  },
+  profile: {
+    changeAvatar: 'Change Avatar'
   },
   comment: {
     open: 'Comment is open',

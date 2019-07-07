@@ -44,3 +44,6 @@ export function createUser(data) {
     data
   })
 }
+
+export const changeAvatar = '/profile/avatar/admin'
+
