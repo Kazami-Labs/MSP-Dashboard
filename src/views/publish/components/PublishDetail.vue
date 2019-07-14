@@ -86,7 +86,7 @@
               <mavon-editor
                 ref="editor"
                 v-model="postForm.markdown_code"
-                :language="language"
+                :language="mdLanguage"
                 :ishljs="true"
                 style="min-height: 600px;"
                 @change="handleMarkdownChange"
@@ -293,6 +293,14 @@ export default {
     },
     uploadTorrentApi() {
       return uploadTorrentApi
+    },
+    mdLanguage() {
+      const relation = {
+        'zh-cn': 'zh-CN',
+        'en-us': 'en'
+      }
+
+      return relation[this.language]
     }
   },
   created() {
