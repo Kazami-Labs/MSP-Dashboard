@@ -45,6 +45,13 @@ export function createBangumiAccount(data) {
   return request({
     url: '/bangumi-setting/admin',
     method: 'post',
-    params: data
+    data
+  })
+}
+
+export function fetchAllTags() {
+  return request({
+    url: '/bangumi-settings/all-tags/admin',
+    method: 'get'
   })
 }

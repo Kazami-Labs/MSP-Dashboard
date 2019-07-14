@@ -176,7 +176,14 @@ export default {
     username: '账户',
     password: '密码',
     noChangeWithNonValue: '为空表示不修改密码',
-    status: '启用状态'
+    status: '启用状态',
+    tag: '标签',
+    tagInputTips: '请输入标签',
+    tagListIsEmpty: '标签列表为空',
+    tagSelectLabel: '回车以键入标签',
+    tagSelectedLabel: '已选择',
+    tagDeselectLabel: '回车以移除',
+    tagNewInputTips: '将创建新标签'
   },
   torrentUpload: {
     selectFile: '选择文件',

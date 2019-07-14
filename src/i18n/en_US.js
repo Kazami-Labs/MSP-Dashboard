@@ -176,7 +176,14 @@ export default {
     username: 'Username',
     password: 'Password',
     noChangeWithNonValue: 'Blank means no password change',
-    status: 'Status'
+    status: 'Status',
+    tag: 'Tags',
+    tagInputTips: 'Select Tags',
+    tagListIsEmpty: 'List is empty',
+    tagSelectLabel: 'Please enter to select',
+    tagSelectedLabel: 'Selected',
+    tagDeselectLabel: 'Press enter to remove',
+    tagNewInputTips: 'Please enter to create a tag'
   },
   torrentUpload: {
     selectFile: 'Choose file',

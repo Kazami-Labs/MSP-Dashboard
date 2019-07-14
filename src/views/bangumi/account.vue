@@ -39,7 +39,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('bangumiSettings.platform')" width="180px" align="center">
+      <el-table-column :label="$t('bangumiSettings.platform')" align="center" width="180">
         <template slot-scope="scope">
           <template v-if="scope.row.edit">
             <el-select v-model="scope.row.sitedriver" size="small">
@@ -59,98 +59,59 @@
 
       <el-table-column :label="$t('bangumiSettings.authinfo')">
         <template slot-scope="scope">
-          <template v-if="scope.row.edit">
-            <el-row :gutter="20">
-              <el-col :span="8">
-                <el-input
-                  v-model="scope.row.username"
-                  :placeholder="$t('bangumiSettings.username')"
-                  size="small"
-                />
-              </el-col>
-              <el-col :span="8">
-                <el-input
-                  v-model="scope.row.password"
-                  :placeholder="$t('bangumiSettings.noChangeWithNonValue')"
-                  size="small"
-                />
-              </el-col>
-            </el-row>
-          </template>
-          <template v-else>
-            <span>{{ scope.row.username }}</span>
-          </template>
+          <span>{{ scope.row.username }}</span>
+          <span
+            v-for="(tag, index) in scope.row.tags"
+            :key="index"
+            class="span-border-tags success"
+          >{{ tag }}</span>
         </template>
       </el-table-column>
 
       <el-table-column :label="$t('bangumiSettings.status')" class-name="status-col" width="110">
         <template slot-scope="scope">
-          <template v-if="scope.row.edit">
-            <el-select v-model="scope.row.status" size="mini">
-              <el-option :label="$t('common.enable')" :value="1" />
-              <el-option :label="$t('common.disable')" :value="0" />
-            </el-select>
-          </template>
-          <template v-else>
-            <el-tag
-              v-if="false"
-              :disable-transitions="true"
-              :type="scope.row.status | statusFilter"
-              size="mini"
-            >{{ transferStatus(scope.row.status) }}</el-tag>
-            <span
-              v-else
-              :class="scope.row.status | statusFilter"
-              class="span-border"
-            >{{ transferStatus(scope.row.status) }}</span>
-          </template>
+          <el-tag
+            v-if="false"
+            :disable-transitions="true"
+            :type="scope.row.status | statusFilter"
+            size="mini"
+          >{{ transferStatus(scope.row.status) }}</el-tag>
+          <span
+            v-else
+            :class="scope.row.status | statusFilter"
+            class="span-border"
+          >{{ transferStatus(scope.row.status) }}</span>
         </template>
       </el-table-column>
 
       <el-table-column :label="$t('table.actions')" :width="actionBarLength" align="center">
         <template slot-scope="scope">
-          <template v-if="scope.row.edit">
-            <el-button
-              type="success"
-              size="small"
-              icon="el-icon-circle-check-outline"
-              @click="confirmEdit(scope.row)"
-            >{{ $t('common.ok') }}</el-button>
-            <el-button
-              size="small"
-              icon="el-icon-refresh"
-              type="warning"
-              @click="cancelEdit(scope.row)"
-            >{{ $t('common.cancel') }}</el-button>
-          </template>
-          <template v-else>
-            <el-button
-              type="primary"
-              size="small"
-              icon="el-icon-edit"
-              @click="scope.row.edit=!scope.row.edit"
-            >{{ $t('common.edit') }}</el-button>
-            <el-button
-              v-if="scope.row.status === 0"
-              type="success"
-              size="small"
-              icon="el-icon-circle-check-outline"
-              @click="handleEnable(scope.row)"
-            >{{ $t('common.enable') }}</el-button>
-            <el-button
-              v-if="scope.row.status === 1"
-              type="info"
-              size="small"
-              icon="el-icon-circle-close-outline"
-              @click="handleDisable(scope.row)"
-            >{{ $t('common.disable') }}</el-button>
-            <el-button
-              size="small"
-              icon="el-icon-delete"
-              type="danger"
-              @click="deleteItem(scope.row)"
-            >{{ $t('common.delete') }}</el-button>
-          </template>
+          <el-button
+            type="primary"
+            size="small"
+            icon="el-icon-edit"
+            @click="handleEdit(scope.row)"
+          >{{ $t('common.edit') }}</el-button>
+          <el-button
+            v-if="scope.row.status === 0"
+            type="success"
+            size="small"
+            icon="el-icon-circle-check-outline"
+            @click="handleEnable(scope.row)"
+          >{{ $t('common.enable') }}</el-button>
+          <el-button
+            v-if="scope.row.status === 1"
+            type="info"
+            size="small"
+            icon="el-icon-circle-close-outline"
+            @click="handleDisable(scope.row)"
+          >{{ $t('common.disable') }}</el-button>
+          <el-button
+            size="small"
+            icon="el-icon-delete"
+            type="danger"
+            @click="deleteItem(scope.row)"
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -162,7 +123,7 @@
         :model="temp"
         label-position="left"
         label-width="70px"
-        style="width: 400px; margin-left:50px;"
+        style="width: 90%; margin-left:50px;"
       >
         <el-form-item :label="$t('bangumiSettings.platform')">
           <el-select
@@ -184,6 +145,23 @@
         <el-form-item :label="$t('bangumiSettings.password')" prop="password">
           <el-input v-model="temp.password" type="password" />
         </el-form-item>
+        <el-form-item :label="$t('bangumiSettings.tag')" prop="tags">
+          <multiselect
+            id="bangumi-settings-tag"
+            v-model="temp.tags"
+            :options="tagOptions"
+            :placeholder="$t('bangumiSettings.tagInputTips')"
+            :select-label="$t('bangumiSettings.tagSelectLabel')"
+            :deselect-label="$t('bangumiSettings.tagDeselectLabel')"
+            :selected-label="$t('bangumiSettings.tagSelectedLabel')"
+            :multiple="true"
+            :taggable="true"
+            :tag-placeholder="$t('bangumiSettings.tagNewInputTips')"
+            @tag="handleAddTag"
+          >
+            <template slot="noOptions">{{ $t('bangumiSettings.tagListIsEmpty') }}</template>
+          </multiselect>
+        </el-form-item>
         <el-form-item :label="$t('bangumiSettings.status')">
           <el-select
             v-model="temp.status"
@@ -203,7 +181,7 @@
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
         <el-button
           type="primary"
-          @click="dialogStatus==='create'?createData():updateData()"
+          @click="dialogStatus==='create'?handleAdd():handleUpdate()"
         >{{ $t('table.confirm') }}</el-button>
       </div>
     </el-dialog>
@@ -211,6 +189,8 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
 import { mapGetters } from 'vuex'
 import * as api from '@/api/settings'
 import waves from '@/directive/waves' // 水波纹指令
@@ -220,11 +200,15 @@ const temp = {
   sitedriver: '',
   username: '',
   password: undefined,
+  tags: [],
   status: 1
 }
 
 export default {
   name: 'BangumiAccounts',
+  components: {
+    Multiselect
+  },
   directives: {
     waves
   },
@@ -278,6 +262,8 @@ export default {
         { label: 'isEnabled', key: 1 }
       ],
       temp: Object.assign({}, temp),
+      tagOptions: [],
+      tagQuery: null,
       rules: {
         type: [{ required: true, message: 'type is required', trigger: 'change' }],
         timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
@@ -290,19 +276,30 @@ export default {
     actionBarLength() {
       let width = 0
       switch (this.language) {
-        case 'en':
+        case 'en-us':
           width = 300
           break
-        case 'zh':
+        case 'zh-cn':
         default:
           width = 280
           break
       }
       return width
+    },
+    dymaticTagOptions() {
+      if (this.tagQuery) {
+        return [this.tagQuery].concat(this.tagOptions)
+      }
+      return this.tagOptions
     }
   },
   created() {
     this.getList()
+
+    api.fetchAllTags()
+      .then(response => {
+        this.tagOptions = response.data
+      })
   },
   methods: {
     getList() {
@@ -329,35 +326,20 @@ export default {
       }
       return statusMap[status]
     },
-    cancelEdit(row) {
-      row.username = row.originalUsername
-      row.status = row.originalStatus
-      row.password = ''
-      row.edit = false
-      // this.$message({
-      //   message: 'The title has been restored to the original value',
-      //   type: 'warning'
-      // })
+    handleEdit(row) {
+      this.dialogFormVisible = true
+      this.temp = Object.assign(this.temp, row)
     },
-    confirmEdit(row) {
-      console.log(row)
+    handleUpdate() {
+      const row = this.temp
       api.updateBangumiAccount(row.id, row)
         .then(data => {
-          console.log(data)
-          row.edit = false
-          const self = this
-          row.originalUsername = row.username
-          row.originalStatus = row.status
-          // this.list.some((v, index, list) => {
-          //   if (v.id === row.id) {
-          //     this.list[index] = row
-          //     return true
-          //   }
-          // })
+          this.dialogFormVisible = false
           this.$message({
-            message: self.$t('common.updateDone'),
+            message: this.$t('common.updateDone'),
             type: 'success'
           })
+          this.getList()
         })
         .catch(e => {
           console.log(e)
@@ -368,13 +350,6 @@ export default {
             type: 'warning'
           })
         })
-
-      // row.edit = false
-      // row.originalTitle = row.title
-      // this.$message({
-      //   message: 'The title has been edited',
-      //   type: 'success'
-      // })
     },
     deleteItem(row) {
       this.$confirm(
@@ -446,7 +421,7 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    createData() {
+    handleAdd() {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
@@ -467,6 +442,10 @@ export default {
             })
         }
       })
+    },
+    handleAddTag(newTag) {
+      this.tagOptions.push(newTag)
+      this.temp.tags.push(newTag)
     }
   }
 }
@@ -478,19 +457,24 @@ export default {
   font-size: 14px;
 }
 
-.span-border {
+.span-border,
+.span-border-tags {
   border-width: 1px;
   border-style: solid;
   border-radius: 5px;
   padding: 2.5px 10px;
 }
 
-.span-border.success {
+.span-border-tags {
+  margin: 0 5px;
+}
+
+.success {
   border-color: rgba(103, 194, 58, 0.2);
   background-color: rgba(103, 194, 58, 0.1);
   color: #67c23a;
 }
-.span-border.danger {
+.danger {
   border-color: rgba(245, 108, 108, 0.2);
   background-color: rgba(245, 108, 108, 0.1);
   color: #f56c6c;
