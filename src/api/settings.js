@@ -55,3 +55,10 @@ export function fetchAllTags() {
     method: 'get'
   })
 }
+
+export function fetchEchoSetting() {
+  return request({
+    url: '/setting/echo/admin',
+    method: 'get'
+  })
+}

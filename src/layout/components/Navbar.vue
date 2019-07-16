@@ -13,9 +13,8 @@
         <el-tooltip :content="queuesBtnTips" effect="dark" placement="top-end">
           <el-button
             :type="queuesBtnType"
-            :loading="queuesBtnLoading"
             class="el-button-micro"
-            icon="el-icon-check"
+            :icon="queuesBtnIcon"
             size="mini"
             circle
             @click="$router.push({ name: 'Dashboard' })"
@@ -60,11 +59,13 @@
 import { mapGetters } from 'vuex'
 import { toPortal } from '@/api/user'
 import { getQueues } from '@/api/publish'
+import { fetchEchoSetting } from '@/api/settings'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import LangSelect from '@/components/LangSelect'
 import ErrorLog from '@/components/ErrorLog'
+import Echo from 'laravel-echo'
 
 export default {
   components: {
@@ -79,25 +80,38 @@ export default {
       queuesBtnType: 'primary',
       queuesBtnLoading: true,
       queuesBtnTips: '',
-      queuesInterval: null
+      queuesInterval: null,
+      echo: null
     }
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar'])
+    ...mapGetters(['sidebar', 'avatar']),
+    queuesBtnIcon() {
+      return this.queuesBtnLoading ? 'el-icon-loading' : 'el-icon-check'
+    }
   },
   created() {
     this.queuesBtnTips = this.$t('navbar.queueProcess')
   },
   mounted() {
-    const INTERVAL_TO_GET_QUEUES = 3000
-    this.queuesInterval = window.setInterval(() => {
-      this.checkQueues().catch(e => {
-        window.clearInterval(this.queuesInterval)
+    this.checkQueues()
+    window.Pusher = require('pusher-js')
+    fetchEchoSetting()
+      .then(response => {
+        this.echo = new Echo(response.data)
+        this.echo
+          .channel('Queues')
+          .listen('SyncQueuesChange', data => {
+            const { list, length, has_done } = data
+            this.commitQueuesData(list, length, has_done)
+          })
       })
-    }, INTERVAL_TO_GET_QUEUES)
   },
   destroyed() {
-    window.clearInterval(this.queuesInterval)
+    if (this.echo) {
+      this.echo
+        .leave('Queues')
+    }
   },
   methods: {
     toggleSideBar() {
@@ -115,18 +129,22 @@ export default {
     },
     checkQueues() {
       return getQueues().then(res => {
-        this.$store.dispatch('app/storeQueues', res.data.list)
-        this.$store.dispatch('app/storeQueuesLength', res.data.length)
-        if (res.data.has_done) {
-          this.queuesBtnType = 'success'
-          this.queuesBtnTips = this.$t('navbar.queueCompile')
-          this.queuesBtnLoading = false
-        } else {
-          this.queuesBtnType = 'primary'
-          this.queuesBtnTips = this.$t('navbar.queueProcess')
-          this.queuesBtnLoading = true
-        }
+        const { list, length, has_done } = res.data
+        this.commitQueuesData(list, length, has_done)
       })
+    },
+    commitQueuesData(list, length, has_done) {
+      this.$store.dispatch('app/storeQueues', list)
+      this.$store.dispatch('app/storeQueuesLength', length)
+      if (has_done) {
+        this.queuesBtnType = 'success'
+        this.queuesBtnTips = this.$t('navbar.queueCompile')
+        this.queuesBtnLoading = false
+      } else {
+        this.queuesBtnType = 'primary'
+        this.queuesBtnTips = this.$t('navbar.queueProcess')
+        this.queuesBtnLoading = true
+      }
     },
     async logout() {
       await this.$store.dispatch('user/logout')
