@@ -81,7 +81,8 @@ export default {
       queuesBtnLoading: true,
       queuesBtnTips: '',
       queuesInterval: null,
-      echo: null
+      echo: null,
+      checkQueuesLock: false
     }
   },
   computed: {
@@ -102,8 +103,14 @@ export default {
         this.echo
           .channel('Queues')
           .listen('SyncQueuesChange', data => {
-            const { list, length, has_done } = data
-            this.commitQueuesData(list, length, has_done)
+            if (this.checkQueuesLock) {
+              return
+            }
+            this.checkQueuesLock = true
+            this.checkQueues()
+              .finally(_ => {
+                this.checkQueuesLock = false
+              })
           })
       })
   },
